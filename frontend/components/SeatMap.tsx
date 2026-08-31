@@ -42,7 +42,7 @@ export function SeatMap({ aircraft, winningSeats = [], isDrawing = false }: Seat
       <div className="relative max-w-full overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-700">
         <div className="min-w-[400px] flex flex-col items-center">
           {/* Cockpit / Nose */}
-          <div className="w-48 h-12 bg-gradient-to-b from-sky-900/60 to-slate-800 border-t-2 border-x-2 border-sky-500/40 rounded-t-full flex items-center justify-center text-xs font-semibold text-sky-300 tracking-widest uppercase mb-4 shadow-lg shadow-sky-950/50">
+          <div className="w-48 h-12 bg-linear-to-b from-sky-900/60 to-slate-800 border-t-2 border-x-2 border-sky-500/40 rounded-t-full flex items-center justify-center text-xs font-semibold text-sky-300 tracking-widest uppercase mb-4 shadow-lg shadow-sky-950/50">
             <span>Cockpit</span>
           </div>
 
@@ -54,7 +54,7 @@ export function SeatMap({ aircraft, winningSeats = [], isDrawing = false }: Seat
               return (
                 <div
                   key={rowNum}
-                  className={`flex items-center justify-center gap-4 px-4 py-1.5 rounded-lg transition-colors ${
+                  className={`relative flex items-center justify-center gap-4 px-4 py-1.5 rounded-lg transition-colors ${
                     isExit ? "bg-amber-950/30 border border-amber-500/30" : "hover:bg-slate-800/50"
                   }`}
                 >
@@ -77,7 +77,7 @@ export function SeatMap({ aircraft, winningSeats = [], isDrawing = false }: Seat
                               title={`Seat ${seatCode}`}
                               className={`relative w-8 h-8 rounded-md flex items-center justify-center text-xs font-mono font-bold transition-all duration-300 transform ${
                                 isWinner
-                                  ? "bg-gradient-to-tr from-amber-500 to-yellow-400 text-slate-950 scale-110 shadow-lg shadow-amber-500/50 ring-2 ring-amber-300 z-10 animate-bounce"
+                                  ? "bg-linear-to-tr from-amber-500 to-yellow-400 text-slate-950 scale-110 shadow-lg shadow-amber-500/50 ring-2 ring-amber-300 z-10 animate-bounce"
                                   : isDrawing
                                   ? "bg-slate-800 text-slate-400 animate-pulse"
                                   : "bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 hover:border-sky-500/50"
@@ -95,8 +95,12 @@ export function SeatMap({ aircraft, winningSeats = [], isDrawing = false }: Seat
                     ))}
                   </div>
 
+                  <span className="w-8 text-left text-xs font-mono font-semibold text-slate-400">
+                    {rowNum}
+                  </span>
+
                   {/* Exit Row Indicator */}
-                  <span className="w-12 text-xs font-semibold text-amber-500/80">
+                  <span className="absolute top-3.5 left-3 w-12 text-xs font-semibold text-amber-500/80">
                     {isExit ? "EXIT" : ""}
                   </span>
                 </div>
@@ -112,7 +116,7 @@ export function SeatMap({ aircraft, winningSeats = [], isDrawing = false }: Seat
       </div>
 
       {winningSeats.length > 0 && (
-        <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/30 flex items-center justify-between">
+        <div className="mt-6 p-4 rounded-xl bg-linear-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/30 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-amber-500 text-slate-950">
               <Sparkles className="w-5 h-5" />

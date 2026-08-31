@@ -143,7 +143,7 @@ export default function Home() {
       <header className="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-gradient-to-tr from-sky-500 to-indigo-600 rounded-2xl shadow-lg shadow-sky-500/20 text-slate-950 font-black">
+            <div className="p-3 bg-linear-to-tr from-sky-500 to-indigo-600 rounded-2xl shadow-lg shadow-sky-500/20 text-slate-950 font-black">
               <Plane className="w-6 h-6 text-white" />
             </div>
             <div>
@@ -176,7 +176,7 @@ export default function Home() {
                   : "text-slate-400 hover:text-slate-200"
               }`}
             >
-              <ListFilter className="w-3.5 h-3.5" /> History Log
+              <ListFilter className="w-3.5 h-3.5" /> History Log 
             </button>
           </div>
         </div>
@@ -187,7 +187,7 @@ export default function Home() {
         {activeTab === "issue" ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Form & Controls */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 space-y-6 lg:sticky top-24">
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
                 <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
                   <UserCheck className="w-5 h-5 text-sky-400" /> Crew & Flight Entry
@@ -298,7 +298,7 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={submitting || !!duplicateAlert || checkingDuplicate}
-                    className="w-full py-3.5 px-4 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 disabled:opacity-50 text-slate-950 font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all transform active:scale-95"
+                    className="w-full py-3.5 px-4 bg-linear-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 disabled:opacity-50 text-slate-950 font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all transform active:scale-95"
                   >
                     {submitting ? (
                       <>

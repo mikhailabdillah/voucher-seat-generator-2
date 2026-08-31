@@ -38,7 +38,7 @@ export function VoucherPassModal({ voucher, onClose }: VoucherPassModalProps) {
 
         {/* Printable Pass Content */}
         <div className="p-6 space-y-6">
-          <div className="bg-gradient-to-br from-sky-950/80 via-slate-900 to-indigo-950/80 border border-sky-500/30 rounded-2xl p-6 relative overflow-hidden shadow-inner">
+          <div className="bg-linear-to-br from-sky-950/80 via-slate-900 to-indigo-950/80 border border-sky-500/30 rounded-2xl p-6 relative overflow-hidden shadow-inner">
             {/* Background Decorative Pattern */}
             <div className="absolute right-[-20px] top-[-20px] opacity-10 pointer-events-none">
               <Plane className="w-64 h-64 text-sky-400" />
