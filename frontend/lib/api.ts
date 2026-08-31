@@ -51,7 +51,7 @@ export async function getAircraftTypes(): Promise<AircraftConfig[]> {
 }
 
 /**
- * Check if flight + date already has an issued voucher
+ * Check if flight + date already has an issued voucher (/api/check)
  */
 export async function checkDuplicateVoucher(
   flightNumber: string,
@@ -59,7 +59,7 @@ export async function checkDuplicateVoucher(
 ): Promise<{ isDuplicate: boolean; existingVoucher: Voucher | null }> {
   if (!flightNumber || !flightDate) return { isDuplicate: false, existingVoucher: null };
   const res = await fetch(
-    `${API_BASE_URL}/vouchers/check?flight_number=${encodeURIComponent(
+    `${API_BASE_URL}/check?flight_number=${encodeURIComponent(
       flightNumber
     )}&flight_date=${encodeURIComponent(flightDate)}`,
     { cache: "no-store" }
@@ -70,12 +70,12 @@ export async function checkDuplicateVoucher(
 }
 
 /**
- * Generate 3 non-repeating seats and save voucher to database
+ * Generate 3 non-repeating seats and save voucher to database (/api/generate)
  */
 export async function createVoucher(
   input: CreateVoucherInput
 ): Promise<{ voucher: Voucher; seatDetails: SelectedSeat[] }> {
-  const res = await fetch(`${API_BASE_URL}/vouchers`, {
+  const res = await fetch(`${API_BASE_URL}/generate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
@@ -94,7 +94,7 @@ export async function createVoucher(
 }
 
 /**
- * Fetch all issued vouchers (with optional search query)
+ * Fetch all issued vouchers (with optional search query) (/api/vouchers)
  */
 export async function getVouchers(search?: string): Promise<Voucher[]> {
   const url = search
@@ -107,7 +107,7 @@ export async function getVouchers(search?: string): Promise<Voucher[]> {
 }
 
 /**
- * Delete a voucher record
+ * Delete a voucher record (/api/vouchers/:id)
  */
 export async function deleteVoucher(id: number): Promise<boolean> {
   const res = await fetch(`${API_BASE_URL}/vouchers/${id}`, {

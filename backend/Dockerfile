@@ -34,5 +34,5 @@ ENV DATABASE_URL="file:../data/vouchers.db"
 # Create data directory for SQLite persistence
 RUN mkdir -p /app/backend/data
 
-# Entrypoint script to push DB schema and start server
-CMD ["sh", "-c", "pnpm prisma db push && node dist/index.js"]
+# Entrypoint script to push DB schema and start server via bin/www.js
+CMD ["sh", "-c", "pnpm prisma db push && node dist/bin/www.js"]

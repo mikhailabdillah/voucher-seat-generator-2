@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { generateSeatMap, AIRCRAFT_CONFIGS } from "../src/aircraft/index.js";
+import { generateSeatMap, AIRCRAFT_CONFIGS } from "../src/services/aircraftService.js";
 import { pickRandomSeats } from "../src/services/seatService.js";
 
 describe("generateSeatMap", () => {

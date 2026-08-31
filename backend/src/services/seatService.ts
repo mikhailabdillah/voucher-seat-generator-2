@@ -2,7 +2,7 @@ import {
   type AircraftType,
   generateSeatMap,
   getSeatPosition,
-} from "../aircraft/index.js";
+} from "./aircraftService.js";
 
 export interface SelectedSeat {
   seat: string;
@@ -13,7 +13,7 @@ export interface SelectedSeat {
 
 /**
  * Picks `count` distinct seats at random from the aircraft's seat map
- * using Fisher-Yates partial shuffle (O(count) time, no repeats).
+ * using Fisher-Yates partial shuffle (O(count) time, guaranteed no repeats).
  */
 export function pickRandomSeats(
   aircraftType: AircraftType,
@@ -27,7 +27,6 @@ export function pickRandomSeats(
     );
   }
 
-  // Partial Fisher-Yates shuffle — only shuffle as many positions as needed
   const arr = [...pool];
   for (let i = 0; i < count; i++) {
     const j = i + Math.floor(Math.random() * (arr.length - i));

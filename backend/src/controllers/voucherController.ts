@@ -1,6 +1,6 @@
-import { Router, type Router as ExpressRouter } from "express";
+import type { Request, Response } from "express";
 import { z } from "zod";
-import { AIRCRAFT_CONFIGS, type AircraftType } from "../aircraft/index.js";
+import { AIRCRAFT_CONFIGS, type AircraftType } from "../services/aircraftService.js";
 import { pickRandomSeats } from "../services/seatService.js";
 import {
   checkDuplicate,
@@ -9,11 +9,7 @@ import {
   getVoucherById,
   searchVouchers,
   deleteVoucher,
-} from "../db/voucherRepository.js";
-
-export const voucherRouter: ExpressRouter = Router();
-
-// ─── Validation Schemas ───────────────────────────────────────────────────────
+} from "../services/voucherService.js";
 
 const aircraftTypeEnum = Object.keys(AIRCRAFT_CONFIGS) as [
   AircraftType,
@@ -33,13 +29,10 @@ const CreateVoucherSchema = z.object({
   aircraft_type: z.enum(aircraftTypeEnum),
 });
 
-// ─── Routes ──────────────────────────────────────────────────────────────────
-
-/**
- * GET /api/vouchers/check?flight_number=GA421&flight_date=2024-01-15
- * Check if a voucher already exists for this flight + date
- */
-voucherRouter.get("/check", async (req, res) => {
+export async function checkVoucherDuplicate(
+  req: Request,
+  res: Response
+): Promise<void> {
   const { flight_number, flight_date } = req.query;
 
   if (
@@ -63,25 +56,26 @@ voucherRouter.get("/check", async (req, res) => {
       existingVoucher: existing ?? null,
     },
   });
-});
+}
 
-/**
- * GET /api/vouchers — list all vouchers (with optional ?search=query)
- */
-voucherRouter.get("/", async (req, res) => {
+export async function getVouchersList(
+  req: Request,
+  res: Response
+): Promise<void> {
   const { search } = req.query;
   const vouchers =
     search && typeof search === "string" && search.trim()
       ? await searchVouchers(search.trim())
       : await getAllVouchers();
   res.json({ success: true, data: vouchers, count: vouchers.length });
-});
+}
 
-/**
- * GET /api/vouchers/:id — get a single voucher by ID
- */
-voucherRouter.get("/:id", async (req, res) => {
-  const id = parseInt(req.params.id, 10);
+export async function getVoucherDetails(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const rawId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const id = parseInt(rawId, 10);
   if (isNaN(id)) {
     res.status(400).json({ success: false, error: "Invalid voucher ID" });
     return;
@@ -92,14 +86,12 @@ voucherRouter.get("/:id", async (req, res) => {
     return;
   }
   res.json({ success: true, data: voucher });
-});
+}
 
-/**
- * POST /api/vouchers — generate 3 random seats and persist the voucher
- * Body: { crew_name, crew_id, flight_number, flight_date, aircraft_type }
- */
-voucherRouter.post("/", async (req, res) => {
-  // 1. Validate input
+export async function issueVoucher(
+  req: Request,
+  res: Response
+): Promise<void> {
   const parsed = CreateVoucherSchema.safeParse(req.body);
   if (!parsed.success) {
     res.status(422).json({
@@ -113,7 +105,6 @@ voucherRouter.post("/", async (req, res) => {
   const { crew_name, crew_id, flight_number, flight_date, aircraft_type } =
     parsed.data;
 
-  // 2. Check for duplicate (same flight + date) — pre-flight check for better UX
   const existing = await checkDuplicate(flight_number, flight_date);
   if (existing) {
     res.status(409).json({
@@ -124,11 +115,9 @@ voucherRouter.post("/", async (req, res) => {
     return;
   }
 
-  // 3. Generate 3 random unique seats via Fisher-Yates
   const selectedSeats = pickRandomSeats(aircraft_type, 3);
   const [s1, s2, s3] = selectedSeats;
 
-  // 4. Persist to database via Prisma
   try {
     const voucher = await createVoucher({
       crew_name,
@@ -155,13 +144,14 @@ voucherRouter.post("/", async (req, res) => {
     }
     throw err;
   }
-});
+}
 
-/**
- * DELETE /api/vouchers/:id — delete a voucher record
- */
-voucherRouter.delete("/:id", async (req, res) => {
-  const id = parseInt(req.params.id, 10);
+export async function removeVoucher(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const rawId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const id = parseInt(rawId, 10);
   if (isNaN(id)) {
     res.status(400).json({ success: false, error: "Invalid voucher ID" });
     return;
@@ -172,4 +162,4 @@ voucherRouter.delete("/:id", async (req, res) => {
     return;
   }
   res.json({ success: true, message: `Voucher #${id} deleted` });
-});
+}

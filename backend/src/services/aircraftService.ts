@@ -1,4 +1,3 @@
-// Aircraft type identifiers supported by the system
 export type AircraftType =
   | "B737-800"
   | "A320-200"
@@ -14,17 +13,11 @@ export interface AircraftConfig {
   category: "narrowbody" | "widebody" | "turboprop" | "regional";
   totalSeats: number;
   rows: number;
-  /** Seat columns per group, e.g. [["A","B","C"],["D","E","F"]] */
   columnGroups: string[][];
-  /** Row numbers that are exit rows (display info only) */
   exitRows: number[];
   description: string;
 }
 
-/**
- * All supported aircraft configurations.
- * Seat numbers are generated at runtime from rows × columnGroups.
- */
 export const AIRCRAFT_CONFIGS: Record<AircraftType, AircraftConfig> = {
   "B737-800": {
     id: "B737-800",
@@ -94,10 +87,14 @@ export const AIRCRAFT_CONFIGS: Record<AircraftType, AircraftConfig> = {
   },
 };
 
-/**
- * Generate the complete list of valid seat identifiers for an aircraft type.
- * e.g. ["1A","1B","1C","1D","1E","1F","2A", ...]
- */
+export function getAllAircraftConfigs(): AircraftConfig[] {
+  return Object.values(AIRCRAFT_CONFIGS);
+}
+
+export function getAircraftConfig(id: string): AircraftConfig | undefined {
+  return AIRCRAFT_CONFIGS[id as AircraftType];
+}
+
 export function generateSeatMap(aircraftType: AircraftType): string[] {
   const config = AIRCRAFT_CONFIGS[aircraftType];
   const seats: string[] = [];
@@ -111,19 +108,13 @@ export function generateSeatMap(aircraftType: AircraftType): string[] {
   return seats;
 }
 
-/**
- * Returns a human-readable position label for a seat column within a given aircraft.
- */
 export function getSeatPosition(
   aircraftType: AircraftType,
   column: string
 ): "Window" | "Middle" | "Aisle" {
   const config = AIRCRAFT_CONFIGS[aircraftType];
-  const allCols = config.columnGroups.flat();
-  const groupSizes = config.columnGroups.map((g) => g.length);
   const col = column.toUpperCase();
 
-  // Determine position within the whole row
   const posInGroup = (cols: string[]): "Window" | "Middle" | "Aisle" | null => {
     const idx = cols.indexOf(col);
     if (idx === -1) return null;
@@ -136,9 +127,10 @@ export function getSeatPosition(
     const group = config.columnGroups[g];
     const pos = posInGroup(group);
     if (pos !== null) {
-      // Aisle seats: outermost columns of each group facing the aisle
       const isFirst = g > 0 && group.indexOf(col) === 0;
-      const isLast = g < config.columnGroups.length - 1 && group.indexOf(col) === group.length - 1;
+      const isLast =
+        g < config.columnGroups.length - 1 &&
+        group.indexOf(col) === group.length - 1;
       if (isFirst || isLast) return "Aisle";
       return pos;
     }
