@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Voucher } from "@/lib/api";
-import { Ticket, X, Printer, CheckCircle2, UserCheck, Calendar, Plane } from "lucide-react";
+import { Ticket, X, Printer, CheckCircle2, Plane } from "lucide-react";
 
 interface VoucherPassModalProps {
   voucher: Voucher;

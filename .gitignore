@@ -1,1 +1,32 @@
-node_modules
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# Express build output
+backend/dist/
+
+# SQLite Database & Storage
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env.local
+
+# OS & IDE Files
+.DS_Store
+.vscode/
+.idea/
+*.log

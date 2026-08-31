@@ -7,7 +7,6 @@ import {
   createVoucher,
   AircraftConfig,
   Voucher,
-  SelectedSeat,
 } from "@/lib/api";
 import { SeatMap } from "@/components/SeatMap";
 import { VoucherHistory } from "@/components/VoucherHistory";
@@ -15,18 +14,14 @@ import { VoucherPassModal } from "@/components/VoucherPassModal";
 import {
   Plane,
   UserCheck,
-  Calendar,
   Sparkles,
   AlertTriangle,
-  CheckCircle2,
   ListFilter,
-  Layers,
-  ArrowRight,
 } from "lucide-react";
 
 export default function Home() {
   const [aircraftList, setAircraftList] = useState<AircraftConfig[]>([]);
-  const [loadingAircraft, setLoadingAircraft] = useState(true);
+  const [, setLoadingAircraft] = useState(true);
 
   // Form State
   const [crewName, setCrewName] = useState("Captain Sarah Jenkins");

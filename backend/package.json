@@ -2,21 +2,15 @@
   "name": "backend",
   "version": "1.0.0",
   "private": true,
-  "description": "Voucher Seat Assignment — Express.js API",
+  "description": "Voucher Seat Assignment — Express.js API with db0 & unstorage",
   "main": "dist/bin/www.js",
   "scripts": {
     "dev": "tsx watch bin/www.ts",
     "build": "tsc",
     "start": "node dist/bin/www.js",
-    "test": "vitest run",
-    "postinstall": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio",
-    "db:reset": "prisma migrate reset"
+    "test": "vitest run"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
     "better-sqlite3": "^11.10.0",
     "cors": "^2.8.5",
     "db0": "^0.4.0",
@@ -34,7 +28,6 @@
     "@types/node": "^22.15.29",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
-    "prisma": "5.22.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"

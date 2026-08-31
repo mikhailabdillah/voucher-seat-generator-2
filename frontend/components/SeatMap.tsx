@@ -1,9 +1,8 @@
-"use me";
 "use client";
 
 import React from "react";
 import { AircraftConfig } from "@/lib/api";
-import { Sparkles, AlertCircle } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 interface SeatMapProps {
   aircraft: AircraftConfig;
