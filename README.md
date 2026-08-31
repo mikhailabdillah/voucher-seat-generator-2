@@ -1,6 +1,6 @@
 # ✈️ Airline Voucher Seat Assignment Application
 
-A full-stack web application for an airline promotional campaign to randomly assign **3 unique, non-repeating seat numbers** per flight to voucher winners. 
+A full-stack web application for an airline promotional campaign to randomly assign **3 unique, non-repeating seat numbers** per flight to voucher winners.
 
 Features interactive 2D aircraft cabin layouts, real-time duplicate flight voucher prevention, printable boarding pass voucher cards, and SQLite database persistence via **Prisma** and **unstorage**.
 
@@ -18,7 +18,7 @@ Features interactive 2D aircraft cabin layouts, real-time duplicate flight vouch
 ## 📋 Assessment Table Schema (`vouchers`)
 
 | Field | Type | Constraint | Description |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id` | `INTEGER` | `PRIMARY KEY AUTOINCREMENT` | Unique record ID |
 | `crew_name` | `TEXT` | `NOT NULL` | Crew member name |
 | `crew_id` | `TEXT` | `NOT NULL` | Crew identification code |
@@ -37,10 +37,12 @@ Features interactive 2D aircraft cabin layouts, real-time duplicate flight vouch
 ## 🚀 Running Locally with pnpm
 
 ### Prerequisites
+
 - Node.js >= 20
 - pnpm >= 9
 
 ### Step 1: Install Dependencies & Setup Database
+
 ```bash
 pnpm install
 cd backend
@@ -49,7 +51,9 @@ cd ..
 ```
 
 ### Step 2: Start Development Servers
+
 Run both backend (`http://localhost:4000`) and frontend (`http://localhost:3000`) concurrently:
+
 ```bash
 pnpm dev
 ```
@@ -67,8 +71,10 @@ docker compose up --build
 - **Frontend Crew Portal**: `http://localhost:3000`
 - **Backend API**: `http://localhost:4000`
 - **API Health Check**: `http://localhost:4000/api/health`
+- **API Docs**: `http://localhost:4000/api/docs`
 
 To stop containers:
+
 ```bash
 docker compose down
 ```
@@ -78,6 +84,7 @@ docker compose down
 ## 🧪 Testing
 
 Run backend unit tests for seat generator and Fisher-Yates uniqueness:
+
 ```bash
 cd backend
 pnpm test
