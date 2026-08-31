@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Voucher, getVouchers, deleteVoucher } from "@/lib/api";
-import { Search, Trash2, Ticket, RefreshCw, Eye } from "lucide-react";
+import { Search, Trash2, Calendar, Ticket, User, RefreshCw, Eye } from "lucide-react";
 
 interface VoucherHistoryProps {
   onSelectVoucher?: (voucher: Voucher) => void;
